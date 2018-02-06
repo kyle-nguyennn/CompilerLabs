@@ -1,0 +1,199 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.io.StringReader;
+
+import lexer.Lexer;
+
+import org.junit.Test;
+
+import frontend.Token;
+import frontend.Token.Type;
+import static frontend.Token.Type.*;
+
+/**
+ * This class contains unit tests for your lexer. Currently, there is only one test, but you
+ * are strongly encouraged to write your own tests.
+ */
+public class LexerTests {
+	// helper method to run tests; no need to change this
+	private final void runtest(String input, Token... output) {
+		Lexer lexer = new Lexer(new StringReader(input));
+		int i=0;
+		Token actual, expected;
+		try {
+			do {
+				assertTrue(i < output.length);
+				expected = output[i++];
+				try {
+					actual = lexer.nextToken();
+					assertEquals(expected, actual);
+				} catch(Error e) {
+					if(expected != null)
+						fail(e.getMessage());
+					return;
+				}
+			} while(!actual.isEOF());
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+
+	/** Example unit test. */
+	@Test
+	public void testKWs() {
+		// first argument to runtest is the string to lex; the remaining arguments
+		// are the expected tokens
+		runtest("module false\nreturn while",
+				new Token(MODULE, 0, 0, "module"),
+				new Token(FALSE, 0, 7, "false"),
+				new Token(RETURN, 1, 0, "return"),
+				new Token(WHILE, 1, 7, "while"),
+				new Token(EOF, 1, 12, ""));
+	}
+
+	@Test
+	public void testMoreKWs() {
+		runtest("if else} type if( If IF",
+				new Token(IF, 0, 0, "if"),
+				new Token(ELSE, 0, 3, "else"),
+				new Token(RCURLY, 0, 7, "}"),
+				new Token(TYPE, 0, 9, "type"),
+				new Token(IF, 0, 14, "if"),
+				new Token(LPAREN, 0, 16, "("),
+				new Token(ID, 0, 18, "If"),
+				new Token(ID, 0, 21, "IF"),
+				new Token(EOF, 0, 23, ""));
+	}
+	
+	@Test
+	public void testPunctuation() {
+		runtest("[((])",
+				new Token(LBRACKET, 0, 0, "["),
+				new Token(LPAREN, 0, 1, "("),
+				new Token(LPAREN, 0, 2, "("),
+				new Token(RBRACKET, 0, 3, "]"),
+				new Token(RPAREN, 0, 4, ")"),
+				new Token(EOF, 0, 5, ""));
+	}
+	
+	@Test
+	public void testOperators() {
+		runtest("+\t--*<=",
+				new Token(PLUS, 0, 0, "+"),
+				new Token(MINUS, 0, 2, "-"),
+				new Token(MINUS, 0, 3, "-"),
+				new Token(TIMES, 0, 4, "*"),
+				new Token(LEQ, 0, 5, "<="),
+				new Token(EOF, 0, 7, ""));
+	}
+	
+	@Test
+	public void testIdentifier1() {
+		runtest("aluis bluis c\nmeetoo not-me not_me else_",
+				new Token(ID, 0, 0, "aluis"),
+				new Token(ID, 0, 6, "bluis"),
+				new Token(ID, 0, 12, "c"),
+				new Token(ID, 1, 0, "meetoo"),
+				new Token(ID, 1, 7, "not"),
+				new Token(MINUS, 1, 10, "-"),
+				new Token(ID, 1, 11, "me"),
+				new Token(ID, 1, 14, "not_me"),
+				new Token(ID, 1, 21, "else_"),
+				new Token(EOF, 1, 26, ""));
+	}
+
+	@Test
+	public void testIdentifier2() {
+		runtest("12aluis aluis12 al12uis al =uis a_b",
+				new Token(INT_LITERAL, 0, 0, "12"),
+				new Token(ID, 0, 2, "aluis"),
+				new Token(ID, 0, 8, "aluis12"),
+				new Token(ID, 0, 16, "al12uis"),
+				new Token(ID, 0, 24, "al"),
+				new Token(EQL, 0, 27, "="),
+				new Token(ID, 0, 28, "uis"),
+				new Token(ID, 0, 32, "a_b"),
+				new Token(EOF, 0, 35, ""));
+	}
+
+	@Test
+	public void testInvalidChar() {
+		runtest("&", (Token)null);
+	}
+
+	@Test
+	public void testIntLiteral1() {
+		runtest("123 0262 1200",
+				new Token(INT_LITERAL, 0, 0, "123"),
+				new Token(INT_LITERAL, 0, 4, "0262"),
+				new Token(INT_LITERAL, 0, 9, "1200"),
+				new Token(EOF, 0, 13, ""));
+	}
+	
+	@Test
+	public void testIntLiteral2() {
+		runtest("a!=-1",
+				new Token(ID, 0, 0, "a"),
+				new Token(NEQ, 0, 1, "!="),
+				new Token(MINUS, 0, 3, "-"),
+				new Token(INT_LITERAL, 0, 4, "1"),
+				new Token(EOF, 0, 5, ""));
+	}
+	
+	@Test
+	public void testStringLiteral1() {
+		runtest("\"aluis\" \"Hello, world!\" \"'What?'\"",
+				new Token(STRING_LITERAL, 0, 0, "aluis"),
+				new Token(STRING_LITERAL, 0, 8, "Hello, world!"),
+				new Token(STRING_LITERAL, 0, 24, "'What?'"),
+				new Token(EOF, 0, 33, ""));
+	}
+	
+	@Test
+	public void testStringLiteral2() {
+		runtest("\"alu + is\" \"Hello; world}\" \"'Wh&&\" \"\"",
+				new Token(STRING_LITERAL, 0, 0, "alu + is"),
+				new Token(STRING_LITERAL, 0, 11, "Hello; world}"),
+				new Token(STRING_LITERAL, 0, 27, "'Wh&&"),
+				new Token(EOF, 0, 36, ""));
+	}
+
+	@Test
+	public void testStringLiteralWithEoLnChar() {
+		runtest("\"\\n\"", 			
+				new Token(STRING_LITERAL, 0, 0, "\n"),
+				new Token(EOF, 0, 4, "")); 
+	}
+	
+	@Test
+	public void testStringLiteralWithDoubleQuote() {
+		runtest("\"\"\"",
+				(Token)null);
+	}
+/*
+	@Test
+	public void testStringLiteralWithTab() {
+		runtest("\"\t\"",
+				new Token(STRING_LITERAL, 0, 0, "\t"),
+				new Token(STRING_LITERAL, 0, 4, "\\t"),  
+				new Token(EOF, 0, 4, ""));
+	}
+*/	
+	@Test
+	public void testStringLiteralNullString() {
+		runtest("\"\"", 
+				new Token(STRING_LITERAL, 0, 0, ""),
+				new Token(EOF, 0, 2, ""));
+	}
+	
+	@Test
+	public void testStringLiteralIncludingBackslash() {
+		runtest("\"\\\"", 
+				(Token)null);
+	}
+	
+}
