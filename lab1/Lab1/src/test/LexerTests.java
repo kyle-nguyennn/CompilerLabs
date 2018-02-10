@@ -22,7 +22,7 @@ public class LexerTests {
 	private final void runtest(String input, Token... output) {
 		Lexer lexer = new Lexer(new StringReader(input));
 		int i=0;
-		Token actual, expected;
+		Token actual=new Token(MODULE, 0, 0, ""), expected;
 		try {
 			do {
 				assertTrue(i < output.length);
@@ -33,7 +33,7 @@ public class LexerTests {
 				} catch(Error e) {
 					if(expected != null)
 						fail(e.getMessage());
-					return;
+					/* return; */
 				}
 			} while(!actual.isEOF());
 		} catch (IOException e) {
@@ -59,7 +59,8 @@ public class LexerTests {
 	public void testStringLiteralWithDoubleQuote() {
 		runtest("\"\"\"",
 				new Token(STRING_LITERAL, 0, 0, ""),
-				(Token)null);
+				(Token)null,
+				new Token(EOF, 0, 3, ""));
 	}
 
 	@Test
@@ -67,14 +68,15 @@ public class LexerTests {
 		runtest("\"\\n\"", 
 				new Token(STRING_LITERAL, 0, 0, "\\n"),
 				new Token(EOF, 0, 4, ""));
-
 	}
 	
+	/** Extra unit tests */
 	@Test
 	public void testStringLiteralFail() {
 		runtest("\"a\"\"", 
 				new Token(STRING_LITERAL, 0, 0, "a"),
-				(Token)null);
+				(Token)null,
+				new Token(EOF, 0, 4, ""));
 	}
 
 	@Test
