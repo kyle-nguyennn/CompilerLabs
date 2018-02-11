@@ -82,14 +82,13 @@ WhiteSpace = [ ] | \t | \f | \n | \r
 "+"		{ return token(PLUS); }						/* + */
 "*"		{ return token(TIMES); }					/* * */
 
-// literals
-[0-9]+		{ return token(INT_LITERAL); }
-\"[^\"\n]*\"		{ return token(STRING_LITERAL, yytext().substring(1, yytext().length() - 1)); }
-
 
 // identifier
 [a-zA-Z][a-zA-Z0-9_]*	{ return token(ID); }
 
+// literals
+[0-9]+		{ return token(INT_LITERAL); }
+\"[^\"\n]*\"		{ return token(STRING_LITERAL, yytext().substring(1, yytext().length() - 1)); }
 
 {WhiteSpace} {}
 
