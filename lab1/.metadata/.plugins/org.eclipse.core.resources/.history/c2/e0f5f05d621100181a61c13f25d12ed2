@@ -11,8 +11,8 @@
     <property name="source" value="1.7"/>
     <import file="user-build.xml"/>
     <path id="JUnit 4.libraryclasspath">
-        <pathelement location="../../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
-        <pathelement location="../../../../usr/lib/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+        <pathelement location="../../../usr/lib/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+        <pathelement location="../../../usr/lib/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
     </path>
     <path id="Lab1.classpath">
         <pathelement location="bin"/>

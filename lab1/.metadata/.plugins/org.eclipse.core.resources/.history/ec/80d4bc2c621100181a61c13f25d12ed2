@@ -1,5 +1,5 @@
 <?eclipse.ant.import?>
-<project name="Mobila" default="gen" basedir=".">
+<project>
 	<taskdef name="jflex" classname="JFlex.anttask.JFlexTask" classpath="lib/jflex.jar"/>
 
 	<target name="lexer">
