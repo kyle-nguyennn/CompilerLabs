@@ -1,0 +1,12 @@
+language: java
+
+script:
+  - cd Lab1
+  - ant gen
+  - ant build
+  - ant LexerTests
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
