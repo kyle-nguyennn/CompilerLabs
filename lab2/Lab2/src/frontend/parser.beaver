@@ -99,8 +99,7 @@ Statement = Localvardeclaration
 Localvardeclaration = TypeName ID SEMICOLON ;
 
 BlockStatement = LCURLY StatementList RCURLY
-				|  LCURLY RCURLY
-				;
+		;
 				
 StatementList = Statement StatementList
                 |
