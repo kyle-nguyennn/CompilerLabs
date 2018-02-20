@@ -1,4 +1,4 @@
-Module --> module identifier { imports declarations }
+Module --> module identifier { Imports Declarations }
 
 Imports --> Import Imports
         | lambda
@@ -13,7 +13,7 @@ Declaration --> FuncDeclaration
               | TypeDeclaration
               | lambda
 
-FuncDeclaration --> AccessibilitySpecifier typename identifier ; ( Parameterlist ) { StatementLists }
+FuncDeclaration --> AccessibilitySpecifier TypeName identifier ; ( Parameterlist ) { StatementLists }
 
 StatementLists --> Statement StatementLists
                 | lambda
@@ -33,8 +33,12 @@ PrimitiveType --> void
                 | boolean
                 | int
 
-ArrayType --> TypeName [ ]
-* note
+ArrayType --> ArrayType [ ]
+           | PrimitiveType [ ]
+           | identifier [ ]
+
+* note - original will have problem
+(according to lab tech, this will no more have shift reduce conflict.)
 
 //tutorial 2 Qn2
 ParameterList --> NonEmptyParameterList
@@ -42,6 +46,8 @@ ParameterList --> NonEmptyParameterList
 
 NonEmptyParameterList --> Parameter COMMA NonEmptyParameterList
                        |  Parameter
+
+Parameter --> TypeName identifier
 
 Statement --> Localvardeclaration 
             | BlockStatements
