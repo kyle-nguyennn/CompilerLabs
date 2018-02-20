@@ -33,7 +33,71 @@
 		  ;
   */
 
-Module = ;
+Module = MODULE ID LCURLY Imports Declarations;
+Imports = Import Imports
+		 | 
+		 ;
+
+Declarations = Declaration Declarations
+              |
+              ;
+
+Declaration = FuncDeclaration
+              | FieldDeclaration
+              | TypeDeclaration
+              | 
+              ;
+
+FuncDeclaration = AccessibilitySpecifier TypeName identifier SEMICOLON LPAREN Parameterlist RPAREN LCURLY StatementLists RCURLY;
+
+StatementLists = Statement StatementLists
+                |
+                ;
+
+FieldDeclaration = AccessibilitySpecifier TypeName ID ;
+
+TypeDeclaration = AccessibilitySpecifier TYPE ID EQL STRING_LITERAL ;
+
+AccessibilitySpecifier = PUBLIC
+                        |
+                        ;
+
+TypeName = PrimitiveType
+          |  ArrayType
+          |  ID
+          ;
+
+PrimitiveType = VOID
+                | BOOLEAN
+                | INT
+                ;
+
+ArrayType = ArrayType LBRACKET RBRACKET
+           | PrimitiveType LBRACKET RBRACKET
+           | ID LBRACKET RBRACKET
+           ;
+
+ParameterList = NonEmptyParameterList
+               |
+               ;
+
+NonEmptyParameterList = Parameter COMMA NonEmptyParameterList
+                       |  Parameter
+                       ;
+
+Parameter = TypeName ID;
+
+Statement = Localvardeclaration 
+            | BlockStatements
+            | IfStatement
+            | WhileStatement
+            | BreakStatement
+            | ReturnStatement
+            | ExpressionStatement
+            ;
+
+
+
 
 /**/
 
