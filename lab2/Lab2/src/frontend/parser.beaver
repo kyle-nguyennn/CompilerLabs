@@ -114,6 +114,14 @@ WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
 BreakStatement = BREAK SEMICOLON; 
 
+ReturnStatement = RETURN ReturnTail;
+
+ReturnTail = Expression SEMICOLON
+            |
+            ;
+
+ExpressionStatement = Expression SEMICOLON; 
+
 Expression = Assignment
 | RHSExpression;
 Assignment = LHSExpression EQL Expression;
@@ -122,6 +130,7 @@ LHSExpression = ID
 ArrayAccess = LHSExpression LBRACKET Expression RBRACKET;
 RHSExpression = ArithmeticExpression
 | ArithmeticExpression ComparisonOperator ArithmeticExpression;
+
 ComparisonOperator = EQEQ
                     | NEQ
                     | LT
@@ -143,6 +152,30 @@ MultiplicativeOperator = TIMES
 
 Factor = MINUS Factor
         | PrimaryExpression ;                 
+
+PrimaryExpression = LHSexpression
+                    | FunctionCall
+                    | ArrayExpression
+                    | StringLiteral
+                    | IntegerLiteral
+                    | Boolean
+                    | ParenthesizedExpression
+                    ;
+
+FunctionCall = ID LPAREN ExpressionLists RPAREN;
+
+ExpressionLists = NonEmptyExpressionList
+                 | 
+                 ;
+
+ArrayExpression = LBRACKET NonEmptyExpressionLists RBRACKET;
+
+ParenthesizedExpression = LPAREN Expression RPAREN;
+
+Boolean = TRUE
+          | FALSE
+          ;
+
 /**/
 
 /* Dummy rule to make the lexer compile. Remove this once you have written all other rules. */	  
