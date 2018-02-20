@@ -30,7 +30,9 @@
 		  ;
   */
 
-Module = MODULE ID LCURLY Imports Declarations;
+Module = MODULE ID LCURLY Imports Declarations RCURLY
+        ;
+
 Imports = Import Imports
 		 | 
 		 ;
