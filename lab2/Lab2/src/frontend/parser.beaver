@@ -48,7 +48,7 @@ Declaration = FuncDeclaration
               | TypeDeclaration
               ;
 
-FuncDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY;
+FuncDeclaration = AccessibilitySpecifier TypeName ID LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY;
 
 StatementLists = Statement StatementLists
                 |
