@@ -6,7 +6,7 @@ script:
   - ant build
   - ant LexerTests
   - cd ../../lab2/Lab2
-  - ant gen
+  - ant parser
   - ant build
   - ant ParserTests
 
