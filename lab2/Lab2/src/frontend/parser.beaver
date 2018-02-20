@@ -87,7 +87,7 @@ NonEmptyParameterList = Parameter COMMA NonEmptyParameterList
 Parameter = TypeName ID;
 
 Statement = Localvardeclaration 
-            | BlockStatements
+            | BlockStatement
             | IfStatement
             | WhileStatement
             | BreakStatement
@@ -100,6 +100,10 @@ Localvardeclaration = TypeName ID SEMICOLON ;
 BlockStatement = LCURLY StatementList RCURLY
 				|  LCURLY RCURLY
 				;
+				
+StatementList = Statement StatementList
+                |
+                ;
 
 IfStatement = IF LPAREN Expression RPAREN Statement ELSE Statement IfTail;
 
@@ -150,7 +154,7 @@ MultiplicativeOperator = TIMES
 Factor = MINUS Factor
         | PrimaryExpression ;                 
 
-PrimaryExpression = LHSexpression
+PrimaryExpression = LHSExpression
                     | FunctionCall
                     | ArrayExpression
                     | STRING_LITERAL
@@ -164,8 +168,12 @@ FunctionCall = ID LPAREN ExpressionLists RPAREN;
 ExpressionLists = NonEmptyExpressionList
                  | 
                  ;
+                 
+NonEmptyExpressionList = Expression COMMA NonEmptyExpressionList
+                        | Expression
+                        ;
 
-ArrayExpression = LBRACKET NonEmptyExpressionLists RBRACKET;
+ArrayExpression = LBRACKET NonEmptyExpressionList RBRACKET;
 
 ParenthesizedExpression = LPAREN Expression RPAREN;
 
