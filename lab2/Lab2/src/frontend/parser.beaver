@@ -114,6 +114,84 @@ WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
 BreakStatement = BREAK SEMICOLON; 
 
+ReturnStatement = RETURN ReturnTail;
+
+ReturnTail = Expression SEMICOLON
+            |
+            ;
+
+ExpressionStatement = Expression SEMICOLON; 
+
+Expression = Assignment
+             | RHSexpression
+             ;
+
+Assignment = LHSexpression EQL Expression;
+
+LHSexpression = ID
+             |  ArrayAccess
+             ;
+
+ArrayAccess = LHSexpression LBRACKET Expression RBRACKET;
+
+RHSexpression = ArithmeticExpression RHStail;
+
+RHStail = ComparisonOperator ArithmeticExpression
+           |
+           ;
+
+ComparisonOperator = EQEQ
+                    | NEQ
+                    | LT
+                    | LEQ
+                    | GT
+                    | GEQ
+                    ;
+
+ArithmeticExpression = ArithmeticExpression AdditiveOperator Term
+                       | Term
+                       ;
+
+AdditiveOperator = PLUS
+                   | MINUS
+                   ;
+
+Term = Term MultiplicativeOperator Factor
+      | Factor
+      ;
+
+MultiplicativeOperator = TIMES
+						| DIV
+						| MOD
+						;
+
+Factor = MINUS Factor
+        | PrimaryExpression
+        ;
+
+PrimaryExpression = LHSexpression
+                    | FunctionCall
+                    | ArrayExpression
+                    | StringLiteral
+                    | IntegerLiteral
+                    | Boolean
+                    | ParenthesizedExpression
+                    ;
+
+FunctionCall = ID LPAREN ExpressionLists RPAREN;
+
+ExpressionLists = NonEmptyExpressionList
+                 | 
+                 ;
+
+ArrayExpression = LBRACKET NonEmptyExpressionLists RBRACKET;
+
+ParenthesizedExpression = LPAREN Expression RPAREN;
+
+Boolean = TRUE
+          | FALSE
+          ;
+
 
 /**/
 
