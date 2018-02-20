@@ -35,6 +35,31 @@ public class ParserTests {
 
 	@Test
 	public void testEmptyModule() {
-		runtest("module Test { }");
+		runtest("module Test { "
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleImports() {
+		runtest("module Test {"
+				+ "import module1;"
+				+ "import module2;"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleTypeDeclaration() {
+		runtest("module Test {"
+				+ "public type float = \"FLOAT\";"
+				+ "type enum = \"ENUM\";"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleFieldDeclaration() {
+		runtest("module Test {"
+				+ "public boolean booleanfield;"
+				+ "int intfield;"
+				+ "}");
 	}
 }
