@@ -173,7 +173,7 @@ PrimaryExpression = LHSexpression
                     | FunctionCall
                     | ArrayExpression
                     | STRING_LITERAL
-                    | IntegerLiteral
+                    | INT_LITERAL
                     | Boolean
                     | ParenthesizedExpression
                     ;
