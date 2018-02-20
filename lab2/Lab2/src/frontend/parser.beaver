@@ -44,7 +44,6 @@ Declarations = Declaration Declarations
 Declaration = FuncDeclaration
               | FieldDeclaration
               | TypeDeclaration
-              | 
               ;
 
 FuncDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY;
