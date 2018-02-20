@@ -62,4 +62,38 @@ public class ParserTests {
 				+ "int intfield;"
 				+ "}");
 	}
+	
+	@Test
+	public void testModuleEmptyFunctionDeclaration() {
+		runtest("module Test {"
+				+ "public void fun() {}"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleParameterFunctionDeclaration() {
+		runtest("module Test {"
+				+ "public void fun(int param) {}"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleParameterListFunctionDeclaration() {
+		runtest("module Test {"
+				+ "public void fun(int param1, boolean param2) {}"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleIfFunctionDeclaration() {
+		runtest("module Test {"
+				+ "public void fun() {"
+				+ "  int x;"
+				+ "  if(x < 10) {return 10;}"
+				+ "  else {return 5;}"
+				+ ""
+				+ "  while(x < 15) {x = 10;}"
+				+ "}"
+				+ "}");
+	}
 }
