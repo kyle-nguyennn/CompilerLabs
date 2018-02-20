@@ -1,41 +1,40 @@
-Module --> module identifier { Imports Declarations }
+Module --> MODULE ID { Imports Declarations }
 
 Imports --> Import Imports
         | lambda
 
-Import --> import identifier ;
+Import --> IMPORT ID ;
 
 Declarations --> Declaration Declarations
               |  lambda
 
 Declaration --> FuncDeclaration
               | FieldDeclaration
-              | TypeDeclaration
-              | lambda
+              | TypeDeclaration            
 
-FuncDeclaration --> AccessibilitySpecifier TypeName identifier ; ( Parameterlist ) { StatementLists }
+FuncDeclaration --> AccessibilitySpecifier TypeName ID ; ( ParameterList ) { StatementLists }
 
 StatementLists --> Statement StatementLists
                 | lambda
 
-FieldDeclaration --> AccessibilitySpecifier TypeName identifier ;
+FieldDeclaration --> AccessibilitySpecifier TypeName ID ;
 
-TypeDeclaration --> AccessibilitySpecifier type identifier = StringLiteral ;
+TypeDeclaration --> AccessibilitySpecifier TYPE ID = STRING_LITERAL;
 
-AccessibilitySpecifier --> public
+AccessibilitySpecifier --> PUBLIC
                         | lambda
 
 TypeName --> PrimitiveType
           |  ArrayType
-          |  identifier
+          |  ID
 
-PrimitiveType --> void
-                | boolean
-                | int
+PrimitiveType --> VOID
+                | BOOLEAN
+                | INT
 
 ArrayType --> ArrayType [ ]
            | PrimitiveType [ ]
-           | identifier [ ]
+           | ID [ ]
 
 * note - original will have problem
 (according to lab tech, this will no more have shift reduce conflict.)
@@ -47,25 +46,27 @@ ParameterList --> NonEmptyParameterList
 NonEmptyParameterList --> Parameter COMMA NonEmptyParameterList
                        |  Parameter
 
-Parameter --> TypeName identifier
+Parameter --> TypeName ID
 
 Statement --> Localvardeclaration 
-            | BlockStatements
+            | BlockStatement
             | IfStatement
             | WhileStatement
             | BreakStatement
             | ReturnStatement
             | ExpressionStatement
 
-Localvardeclaration --> TypeName identifier ;
-BlockStatement --> { StatementList }
-				|  { }
+Localvardeclaration --> TypeName ID ;
 
-IfStatement --> if ( Expression ) statement else statement IfTail
-IfTail --> else statement
+//StatementList already can be empty
+BlockStatement --> { StatementList }
+
+//need to check this...
+IfStatement --> IF ( Expression ) Statement ELSE Statement IfTail
+IfTail --> ELSE Statement
          | lambda
 
-WhileStatement --> while ( Expression ) statement
+WhileStatement --> while ( Expression ) Statement
 
 BreakStatement --> break ; 
 
@@ -81,7 +82,7 @@ Expression --> Assignment
 
 Assignment --> LHSexpression = Expression
 
-LHSexpression --> identifier
+LHSexpression --> ID
              |  ArrayAccess
 
 ArrayAccess --> LHSexpression [ Expression ]
@@ -117,12 +118,12 @@ Factor --> MINUS Factor
 PrimaryExpression --> LHSexpression
                     | FunctionCall
                     | ArrayExpression
-                    | StringLiteral
-                    | IntegerLiteral
+                    | STRING_LITERAL
+                    | INT_LITERAL
                     | Boolean
                     | ParenthesizedExpression
 
-FunctionCall --> identifier ( ExpressionLists )
+FunctionCall --> ID ( ExpressionLists )
 
 ExpressionLists --> NonEmptyExpressionList
                  | lambda
@@ -130,11 +131,9 @@ ExpressionLists --> NonEmptyExpressionList
 NonEmptyExpressionList --> Expression COMMA NonEmptyExpressionList
                         | Expression
 
-ArrayExpression --> [ NonEmptyExpressionLists ]
+ArrayExpression --> [ NonEmptyExpressionList ]
 
 ParenthesizedExpression --> ( Expression )
 
-// not complete yet... refer to pdf
-
-
-
+Boolean --> TRUE
+          | FALSE
