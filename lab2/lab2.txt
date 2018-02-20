@@ -1,0 +1,134 @@
+Module --> module identifier { imports declarations }
+
+Imports --> Import Imports
+        | lambda
+
+Import --> import identifier ;
+
+Declarations --> Declaration Declarations
+              |  lambda
+
+Declaration --> FuncDeclaration
+              | FieldDeclaration
+              | TypeDeclaration
+              | lambda
+
+FuncDeclaration --> AccessibilitySpecifier typename identifier ; ( Parameterlist ) { StatementLists }
+
+StatementLists --> Statement StatementLists
+                | lambda
+
+FieldDeclaration --> AccessibilitySpecifier TypeName identifier ;
+
+TypeDeclaration --> AccessibilitySpecifier type identifier = StringLiteral ;
+
+AccessibilitySpecifier --> public
+                        | lambda
+
+TypeName --> PrimitiveType
+          |  ArrayType
+          |  identifier
+
+PrimitiveType --> void
+                | boolean
+                | int
+
+ArrayType --> TypeName [ ]
+* note
+
+//tutorial 2 Qn2
+ParameterList --> NonEmptyParameterList
+               |  lambda
+
+NonEmptyParameterList --> Parameter COMMA NonEmptyParameterList
+                       |  Parameter
+
+Statement --> Localvardeclaration 
+            | BlockStatements
+            | IfStatement
+            | WhileStatement
+            | BreakStatement
+            | ReturnStatement
+            | ExpressionStatement
+
+Localvardeclaration --> TypeName identifier ;
+BlockStatement --> { StatementList }
+				|  { }
+
+IfStatement --> if ( Expression ) statement else statement IfTail
+IfTail --> else statement
+         | lambda
+
+WhileStatement --> while ( Expression ) statement
+
+BreakStatement --> break ; 
+
+ReturnStatement --> return ReturnTail
+
+ReturnTail --> Expression ;
+            | lambda
+
+ExpressionStatement --> Expression ; 
+
+Expression --> Assignment
+             | RHSexpression
+
+Assignment --> LHSexpression = Expression
+
+LHSexpression --> identifier
+             |  ArrayAccess
+
+ArrayAccess --> LHSexpression [ Expression ]
+
+RHSexpression --> ArithmeticExpression RHStail
+
+RHStail --> ComparisonOperator ArithmeticExpression
+           | lambda
+
+ComparisonOperator --> EQEQ
+                    | NEQ
+                    | LT
+                    | LEQ
+                    | GT
+                    | GEQ
+
+ArithmeticExpression --> ArithmeticExpression AdditiveOperator Term
+                       | Term
+
+AdditiveOperator --> PLUS
+                   | MINUS
+
+Term --> Term MultiplicativeOperator Factor
+      | Factor
+
+MultiplicativeOperator --> TIMES
+						| DIV
+						| MOD
+
+Factor --> MINUS Factor
+        | PrimaryExpression
+
+PrimaryExpression --> LHSexpression
+                    | FunctionCall
+                    | ArrayExpression
+                    | StringLiteral
+                    | IntegerLiteral
+                    | Boolean
+                    | ParenthesizedExpression
+
+FunctionCall --> identifier ( ExpressionLists )
+
+ExpressionLists --> NonEmptyExpressionList
+                 | lambda
+
+NonEmptyExpressionList --> Expression COMMA NonEmptyExpressionList
+                        | Expression
+
+ArrayExpression --> [ NonEmptyExpressionLists ]
+
+ParenthesizedExpression --> ( Expression )
+
+// not complete yet... refer to pdf
+
+
+
