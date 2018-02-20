@@ -38,6 +38,8 @@ Imports = Import Imports
 		 | 
 		 ;
 
+Import --> IMPORT ID SEMICOLON ;
+
 Declarations = Declaration Declarations
               |
               ;
@@ -54,9 +56,9 @@ StatementLists = Statement StatementLists
                 |
                 ;
 
-FieldDeclaration = AccessibilitySpecifier TypeName ID ;
+FieldDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON ;
 
-TypeDeclaration = AccessibilitySpecifier TYPE ID EQL STRING_LITERAL ;
+TypeDeclaration = AccessibilitySpecifier TYPE ID EQL STRING_LITERAL SEMICOLON;
 
 AccessibilitySpecifier = PUBLIC
                         |
@@ -96,7 +98,21 @@ Statement = Localvardeclaration
             | ExpressionStatement
             ;
 
+Localvardeclaration --> TypeName ID SEMICOLON ;
 
+BlockStatement --> LCURLY StatementList RCURLY
+				|  LCURLY RCURLY
+				;
+
+IfStatement --> IF LPAREN Expression RPAREN Statement ELSE Statement IfTail;
+
+IfTail --> ELSE Statement
+         |
+         ;
+
+WhileStatement --> WHILE LPAREN Expression RPAREN Statement ;
+
+BreakStatement --> BREAK SEMICOLON; 
 
 
 /**/
