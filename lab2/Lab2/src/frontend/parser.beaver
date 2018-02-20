@@ -114,7 +114,35 @@ WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
 BreakStatement = BREAK SEMICOLON; 
 
+Expression = Assignment
+| RHSExpression;
+Assignment = LHSExpression EQL Expression;
+LHSExpression = ID
+| ArrayAccess;
+ArrayAccess = LHSExpression LBRACKET Expression RBRACKET;
+RHSExpression = ArithmeticExpression
+| ArithmeticExpression ComparisonOperator ArithmeticExpression;
+ComparisonOperator = EQEQ
+                    | NEQ
+                    | LT
+                    | LEQ
+                    | GT
+                    | GEQ;
+ArithmeticExpression =  ArithmeticExpression AdditiveOperator Term
+                       | Term;
 
+AdditiveOperator = PLUS
+                   | MINUS;
+
+Term = Term MultiplicativeOperator Factor
+      | Factor ;
+
+MultiplicativeOperator = TIMES
+						| DIV
+						| MOD;
+
+Factor = MINUS Factor
+        | PrimaryExpression ;                 
 /**/
 
 /* Dummy rule to make the lexer compile. Remove this once you have written all other rules. */	  
