@@ -38,7 +38,7 @@ Imports = Import Imports
 		 | 
 		 ;
 
-Import --> IMPORT ID SEMICOLON ;
+Import = IMPORT ID SEMICOLON ;
 
 Declarations = Declaration Declarations
               |
@@ -98,21 +98,21 @@ Statement = Localvardeclaration
             | ExpressionStatement
             ;
 
-Localvardeclaration --> TypeName ID SEMICOLON ;
+Localvardeclaration = TypeName ID SEMICOLON ;
 
-BlockStatement --> LCURLY StatementList RCURLY
+BlockStatement = LCURLY StatementList RCURLY
 				|  LCURLY RCURLY
 				;
 
-IfStatement --> IF LPAREN Expression RPAREN Statement ELSE Statement IfTail;
+IfStatement = IF LPAREN Expression RPAREN Statement ELSE Statement IfTail;
 
-IfTail --> ELSE Statement
+IfTail = ELSE Statement
          |
          ;
 
-WhileStatement --> WHILE LPAREN Expression RPAREN Statement ;
+WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
-BreakStatement --> BREAK SEMICOLON; 
+BreakStatement = BREAK SEMICOLON; 
 
 
 /**/
