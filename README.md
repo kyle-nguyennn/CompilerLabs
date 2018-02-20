@@ -1,7 +1,7 @@
 # CompilerLabs
 NTU CZ3007 Compiler techniques assignments
 
-[![Build Status](https://travis-ci.org/Jibbow/CompilerLabs.svg?branch=master)](https://travis-ci.org/Jibbow/CompilerLabs)
+[![Build Status](https://travis-ci.org/helloWorld141/CompilerLabs.svg?branch=master)](https://travis-ci.org/helloWorld141/CompilerLabs)
 
 Covered in CI:
  - Lab 1
