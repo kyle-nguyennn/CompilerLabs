@@ -50,7 +50,7 @@ Declaration = FuncDeclaration
               | 
               ;
 
-FuncDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON LPAREN Parameterlist RPAREN LCURLY StatementLists RCURLY;
+FuncDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY;
 
 StatementLists = Statement StatementLists
                 |
@@ -172,7 +172,7 @@ Factor = MINUS Factor
 PrimaryExpression = LHSexpression
                     | FunctionCall
                     | ArrayExpression
-                    | StringLiteral
+                    | STRING_LITERAL
                     | IntegerLiteral
                     | Boolean
                     | ParenthesizedExpression
