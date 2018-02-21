@@ -85,14 +85,24 @@ public class ParserTests {
 	}
 	
 	@Test
-	public void testModuleIfFunctionDeclaration() {
+	public void testModuleIfWhileFunctionDeclaration() {
 		runtest("module Test {"
 				+ "public void fun() {"
 				+ "  int x;"
 				+ "  if(x < 10) {return 10;}"
-				+ "  else {return 5;}"
+				+ "  else {return;}"
 				+ ""
-				+ "  while(x < 15) {x = 10;}"
+				+ "  while(x < 15) {x = 10; break; }"
+				+ "}"
+				+ "}");
+	}
+	
+	@Test
+	public void testModuleFunctionDeclaration() {
+		runtest("module Test {"
+				+ "public void fun() {"
+				+ "  a[5+7 / 3] = [2,3,4];"
+				+ "  fun(4,5,6);"
 				+ "}"
 				+ "}");
 	}
