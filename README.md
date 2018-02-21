@@ -5,5 +5,6 @@ NTU CZ3007 Compiler techniques assignments
 
 Covered in CI:
  - Lab 1
+ - Lab 2
 
 Open Eclipse and set the workspace to `CompilerLabs/lab1` or `CompilerLabs/lab2`. Note the lowercase! There is also a nested directory `CompilerLabs/lab1/Lab1` which is the wrong directory!
