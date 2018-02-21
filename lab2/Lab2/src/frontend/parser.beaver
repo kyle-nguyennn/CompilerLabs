@@ -129,7 +129,8 @@ LHSExpression = ID
               | ArrayAccess
               ;
 
-ArrayAccess = LHSExpression LBRACKET Expression RBRACKET ;
+ArrayAccess = ID LBRACKET Expression RBRACKET
+            | ArrayAccess LBRACKET Expression RBRACKET ;
 
 RHSExpression = ArithmeticExpression
               | ArithmeticExpression ComparisonOperator ArithmeticExpression
