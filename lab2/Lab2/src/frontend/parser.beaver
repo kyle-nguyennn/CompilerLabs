@@ -26,159 +26,171 @@
          of a rule you may want to add:
          
    Accessibility = PUBLIC
-		  |
-		  ;
+                 |
+                 ;
   */
 
-Module = MODULE ID LCURLY Imports Declarations RCURLY
-        ;
+Module = MODULE ID LCURLY Imports Declarations RCURLY ;
 
 Imports = Import Imports
-		 | 
-		 ;
+        | 
+        ;
 
 Import = IMPORT ID SEMICOLON ;
 
 Declarations = Declaration Declarations
-              |
-              ;
+             |
+             ;
 
 Declaration = FuncDeclaration
-              | FieldDeclaration
-              | TypeDeclaration
-              ;
+            | FieldDeclaration
+            | TypeDeclaration
+            ;
 
-FuncDeclaration = AccessibilitySpecifier TypeName ID LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY;
+FuncDeclaration = AccessibilitySpecifier TypeName ID LPAREN ParameterList RPAREN LCURLY StatementLists RCURLY ;
 
 StatementLists = Statement StatementLists
-                |
-                ;
-
-FieldDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON ;
-
-TypeDeclaration = AccessibilitySpecifier TYPE ID EQL STRING_LITERAL SEMICOLON;
-
-AccessibilitySpecifier = PUBLIC
-                        |
-                        ;
-
-TypeName = PrimitiveType
-          |  ArrayType
-          |  ID
-          ;
-
-PrimitiveType = VOID
-                | BOOLEAN
-                | INT
-                ;
-
-ArrayType = ArrayType LBRACKET RBRACKET
-           | PrimitiveType LBRACKET RBRACKET
-           | ID LBRACKET RBRACKET
-           ;
-
-ParameterList = NonEmptyParameterList
                |
                ;
 
-NonEmptyParameterList = Parameter COMMA NonEmptyParameterList
-                       |  Parameter
+FieldDeclaration = AccessibilitySpecifier TypeName ID SEMICOLON ;
+
+TypeDeclaration = AccessibilitySpecifier TYPE ID EQL STRING_LITERAL SEMICOLON ;
+
+AccessibilitySpecifier = PUBLIC
+                       |
                        ;
 
-Parameter = TypeName ID;
+TypeName = PrimitiveType
+         |  ArrayType
+         |  ID
+         ;
+
+PrimitiveType = VOID
+              | BOOLEAN
+              | INT
+              ;
+
+ArrayType = ArrayType LBRACKET RBRACKET
+          | PrimitiveType LBRACKET RBRACKET
+          | ID LBRACKET RBRACKET
+          ;
+
+ParameterList = NonEmptyParameterList
+              |
+              ;
+
+NonEmptyParameterList = Parameter COMMA NonEmptyParameterList
+                      |  Parameter
+                      ;
+
+Parameter = TypeName ID ;
 
 Statement = Localvardeclaration 
-            | BlockStatement
-            | IfStatement
-            | WhileStatement
-            | BreakStatement
-            | ReturnStatement
-            | ExpressionStatement
-            ;
+          | BlockStatement
+          | IfStatement
+          | WhileStatement
+          | BreakStatement
+          | ReturnStatement
+          | ExpressionStatement
+          ;
 
 Localvardeclaration = TypeName ID SEMICOLON ;
 
-BlockStatement = LCURLY StatementList RCURLY
-		;
+BlockStatement = LCURLY StatementList RCURLY ;
 				
 StatementList = Statement StatementList
-                |
-                ;
+              |
+              ;
 
-IfStatement = IF LPAREN Expression RPAREN Statement ELSE Statement IfTail;
+IfStatement = IF LPAREN Expression RPAREN Statement ELSE Statement IfTail ;
 
 IfTail = ELSE Statement
-         |
-         ;
+       |
+       ;
 
 WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
-BreakStatement = BREAK SEMICOLON; 
+BreakStatement = BREAK SEMICOLON ;
 
-ReturnStatement = RETURN ReturnTail;
+ReturnStatement = RETURN ReturnTail ;
 
 ReturnTail = Expression SEMICOLON
-            |
-            ;
+           |
+           ;
 
-ExpressionStatement = Expression SEMICOLON; 
+ExpressionStatement = Expression SEMICOLON ;
 
 Expression = Assignment
-| RHSExpression;
-Assignment = LHSExpression EQL Expression;
+           | RHSExpression
+           ;
+
+Assignment = LHSExpression EQL Expression ;
+
 LHSExpression = ID
-| ArrayAccess;
-ArrayAccess = LHSExpression LBRACKET Expression RBRACKET;
+              | ArrayAccess
+              ;
+
+ArrayAccess = LHSExpression LBRACKET Expression RBRACKET ;
+
 RHSExpression = ArithmeticExpression
-| ArithmeticExpression ComparisonOperator ArithmeticExpression;
+              | ArithmeticExpression ComparisonOperator ArithmeticExpression
+              ;
 
 ComparisonOperator = EQEQ
-                    | NEQ
-                    | LT
-                    | LEQ
-                    | GT
-                    | GEQ;
-ArithmeticExpression =  ArithmeticExpression AdditiveOperator Term
-                       | Term;
+                   | NEQ
+                   | LT
+                   | LEQ
+                   | GT
+                   | GEQ
+                   ;
+
+ArithmeticExpression = ArithmeticExpression AdditiveOperator Term
+                     | Term
+                     ;
 
 AdditiveOperator = PLUS
-                   | MINUS;
+                 | MINUS
+                 ;
 
 Term = Term MultiplicativeOperator Factor
-      | Factor ;
+     | Factor
+     ;
 
 MultiplicativeOperator = TIMES
-						| DIV
-						| MOD;
+                       | DIV
+                       | MOD
+                       ;
 
 Factor = MINUS Factor
-        | PrimaryExpression ;                 
+       | PrimaryExpression
+       ;                 
 
 PrimaryExpression = LHSExpression
-                    | FunctionCall
-                    | ArrayExpression
-                    | STRING_LITERAL
-                    | INT_LITERAL
-                    | Boolean
-                    | ParenthesizedExpression
-                    ;
+                  | FunctionCall
+                  | ArrayExpression
+                  | STRING_LITERAL
+                  | INT_LITERAL
+                  | Boolean
+                  | ParenthesizedExpression
+                  ;
 
-FunctionCall = ID LPAREN ExpressionLists RPAREN;
+FunctionCall = ID LPAREN ExpressionLists RPAREN ;
 
 ExpressionLists = NonEmptyExpressionList
-                 | 
-                 ;
+                |
+                ;
                  
 NonEmptyExpressionList = Expression COMMA NonEmptyExpressionList
-                        | Expression
-                        ;
+                       | Expression
+                       ;
 
-ArrayExpression = LBRACKET NonEmptyExpressionList RBRACKET;
+ArrayExpression = LBRACKET NonEmptyExpressionList RBRACKET ;
 
-ParenthesizedExpression = LPAREN Expression RPAREN;
+ParenthesizedExpression = LPAREN Expression RPAREN ;
 
 Boolean = TRUE
-          | FALSE
-          ;
+        | FALSE
+        ;
 
 /**/
