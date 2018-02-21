@@ -113,11 +113,9 @@ WhileStatement = WHILE LPAREN Expression RPAREN Statement ;
 
 BreakStatement = BREAK SEMICOLON ;
 
-ReturnStatement = RETURN ReturnTail ;
-
-ReturnTail = Expression SEMICOLON
-           |
-           ;
+ReturnStatement = RETURN SEMICOLON
+                | RETURN Expression SEMICOLON
+                ;
 
 ExpressionStatement = Expression SEMICOLON ;
 
